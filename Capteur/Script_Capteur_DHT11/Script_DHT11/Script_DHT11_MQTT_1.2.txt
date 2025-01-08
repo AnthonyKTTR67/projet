@@ -1,0 +1,95 @@
+#include <DHT.h>
+#include <SPI.h>
+#include <Ethernet.h>
+#include <PubSubClient.h>  // Inclure la bibliothèque MQTT
+
+// Configuration du DHT11
+#define DHTPIN 3                  // Définition de la broche de connexion du capteur DHT11
+#define DHTTYPE DHT11             // Définition du type de capteur (DHT11)
+DHT dht(DHTPIN, DHTTYPE);         // Initialisation du capteur DHT11
+
+// Configuration du réseau Ethernet
+byte mac[] = { 0xA8, 0x61, 0x0A, 0xAE, 0x6F, 0x4D };  // Adresse MAC unique pour l’Ethernet Shield
+IPAddress ip(10, 129, 251, 1);                       // Adresse IP de l’Arduino
+
+// Configuration du client Ethernet
+EthernetClient (ethernetClient);  // Client Ethernet pour se connecter à MQTT
+
+// Configuration du client MQTT
+IPAddress mqttServer(10, 129, 251, 253); // Adresse IP du serveur MQTT
+const int mqttPort = 1883;  // Port par défaut du serveur MQTT
+PubSubClient clientMQTT(ethernetClient); // Initialisation du client MQTT avec EthernetClient
+
+void setup() {
+  Serial.begin(9600);            // Initialisation de la communication série pour le débogage
+  Serial.println("Initialisation...");
+  dht.begin();                    // Initialisation du capteur DHT11
+  Serial.println("Capteur DHT initialisé.");
+
+  // Initialisation de l’Ethernet Shield avec l'adresse MAC et l'adresse IP
+  Ethernet.begin(mac, ip);
+  // Connexion au serveur MQTT
+  clientMQTT.setServer(mqttServer, mqttPort);  // Connexion au serveur MQTT
+
+  // Afficher l'adresse IP de l'Arduino
+  Serial.print("Adresse IP de l'Arduino : ");
+  Serial.println(ip);  // Affiche l'adresse IP complète
+}
+
+void loop() {
+  if (!clientMQTT.connected()) {
+    reconnectMQTT();  // Reconnexion au serveur MQTT si nécessaire
+  }
+
+  clientMQTT.loop();  // Maintenir la connexion avec le serveur MQTT
+
+  // Lecture de la température depuis le capteur DHT11
+  float temp = dht.readTemperature();
+  
+  // Vérifier si la lecture du capteur a échoué
+  if (isnan(temp)) {
+    Serial.println("Échec de la lecture du capteur DHT11 !");
+  } else {
+    // Afficher la température dans le moniteur série
+    Serial.print("Température: ");
+    Serial.print(temp);
+    Serial.println(" °C");
+
+    // Convertir la température en chaîne
+    char tempStr[8];
+    dtostrf(temp, 1, 2, tempStr);  // Convertir la température en chaîne de caractères
+
+    // Publier la température sur le serveur MQTT
+    if (clientMQTT.connected()) {
+      if (clientMQTT.publish("temp", tempStr)) {
+        Serial.println("Température envoyée à MQTT.");
+      } else {
+        Serial.println("Erreur lors de l'envoi de la température.");
+      }
+    } else {
+      Serial.println("Client MQTT non connecté.");
+    }
+  }
+
+  delay(5000);  // Attente d'une seconde avant la prochaine lecture du capteur
+}
+
+void reconnectMQTT() {
+  // Boucle pour se reconnecter au serveur MQTT
+  while (!clientMQTT.connected()) {
+    Serial.print("Tentative de connexion MQTT...");
+    
+    // Créer un identifiant unique pour le client
+    String clientId = "arduinoClient-";
+    clientId += String(random(0xffff), HEX);
+    
+    // Tentative de connexion
+    if (clientMQTT.connect(clientId.c_str())) {
+      Serial.println("Connecté au serveur MQTT.");
+    } else {
+      Serial.print("Échec de la connexion, état : ");
+      Serial.println(clientMQTT.state());
+      delay(5000);  // Attente avant de réessayer
+    }
+  }
+}

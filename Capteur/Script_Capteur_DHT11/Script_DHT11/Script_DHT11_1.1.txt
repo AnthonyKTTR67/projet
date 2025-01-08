@@ -1,0 +1,66 @@
+#include <DHT.h>
+#include <SPI.h>
+#include <Ethernet.h>
+
+// Configuration du DHT11
+#define DHTPIN 3                  // Définition de la broche de connexion du capteur DHT11
+#define DHTTYPE DHT11             // Définition du type de capteur (DHT11)
+DHT dht(DHTPIN, DHTTYPE);         // Initialisation du capteur DHT11
+
+// Configuration du réseau Ethernet
+byte mac[] = { 0xA8, 0x61, 0x0A, 0xAE, 0x6F, 0x4D };  // Adresse MAC unique pour l’Ethernet Shield
+IPAddress ip(10, 129, 251, 1);                       // Adresse IP de l’Arduino
+EthernetServer server(1904);                            // Création d'un serveur HTTP sur le port 80
+
+void setup(){
+  Serial.begin(9600);            // Initialisation de la communication série pour le débogage
+  Serial.println("Initialisation...");
+  dht.begin();                    // Initialisation du capteur DHT11
+  Serial.println("Capteur DHT initialisé.");
+
+  // Initialisation de l’Ethernet Shield avec l'adresse MAC et l'adresse IP
+  Ethernet.begin(mac, ip);
+  server.begin();                // Démarrage du serveur
+
+  Serial.print("Serveur démarré sur IP : ");
+  Serial.println(Ethernet.localIP());   // Affichage de l'adresse IP du serveur dans le moniteur série
+}
+
+void loop(){
+  float temp = dht.readTemperature();           // Lecture de la température depuis le capteur DHT11
+  
+  // Vérifier si la lecture du capteur a échoué
+  if (isnan(temp)) {
+    Serial.println("Échec de la lecture du capteur DHT11 !");
+  } else {
+    // Afficher la température dans le moniteur série
+    Serial.print("Température: ");
+    Serial.print(temp);
+    Serial.println(" °C");
+  }
+
+  // Vérifier si un client est connecté
+  EthernetClient client = server.available();
+  if (client){
+    Serial.println("Client connecté !");
+    
+    // Envoi de l'entête HTTP 200 OK pour indiquer que la connexion a réussi
+    client.println("HTTP/1.1 200 OK");
+    client.println("Content-Type: text/html; charset=UTF-8");   // Définition du type de contenu HTML
+    client.println("Connection: close");         // Indiquer que la connexion se ferme après la réponse
+    client.println();
+    
+    // Génération du contenu HTML affiché sur la page web
+    client.println("<html><head><title>Données du capteur DHT11</title></head><body>");
+    client.println("<h1>Données du capteur DHT11</h1>");
+    client.print("<p>Il fait actuellement ");
+    client.print(temp);
+    client.println(" °C dans la salle serveur du lycée Louis COUFFIGNAL</p>");
+    
+    delay(1);                  // Pause pour s'assurer que le client a bien reçu les données
+    client.stop();             // Déconnexion du client
+    Serial.println("Client déconnecté.");
+  }
+  
+  delay(1000); // Attente d'une 1 secondes avant la prochaine lecture du capteur
+}
