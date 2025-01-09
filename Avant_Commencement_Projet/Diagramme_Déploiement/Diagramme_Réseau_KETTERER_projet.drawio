@@ -1,0 +1,88 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.5 Chrome/126.0.6478.183 Electron/31.3.0 Safari/537.36" version="24.7.5">
+  <diagram name="Page-1" id="7XKxVskrSYzWij41y6TY">
+    <mxGraphModel dx="2117" dy="1886" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0kDpFokZi4Miojhcq2RK-10" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;fillColor=#80E1FF;" parent="1" vertex="1">
+          <mxGeometry x="-310" y="-285" width="1080" height="710" as="geometry" />
+        </mxCell>
+        <mxCell id="V2J-SGUirkFo1w58Hbav-22" value="&lt;span style=&quot;text-align: center;&quot;&gt;Salle serveur&lt;/span&gt;" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;strokeColor=default;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=#FFCF91;" parent="1" vertex="1">
+          <mxGeometry x="-280" y="180" width="280" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-1" value="Serveur Proxmox : @10.129.251.250" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;shadow=1;fillColor=#FFCF91;" parent="1" vertex="1">
+          <mxGeometry x="490" y="180" width="250" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-3" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;fillColor=#C2FFD2;" parent="1" vertex="1">
+          <mxGeometry x="500" y="220" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-5" value="Capteur de température @ip : 10.129.251.1&lt;div&gt;&lt;div&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;shadow=1;fillColor=#FFCF91;" parent="1" vertex="1">
+          <mxGeometry x="-270" y="220" width="250" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-260" y="270" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-7" value="Commutateur coeur de réseau :&amp;nbsp;&lt;div&gt;@10.129.253.100&lt;/div&gt;" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;shadow=1;fillColor=#FFCF91;" parent="1" vertex="1">
+          <mxGeometry x="110" y="180" width="221" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-11" value="@mask : 255.255.0.0" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="340" y="320" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-12" value="VM&amp;nbsp; Debianserveur mosquitto&amp;nbsp;&amp;nbsp;&lt;div&gt;@ip : 10.129.251.253&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="500" y="220" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="510" y="255" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="V2J-SGUirkFo1w58Hbav-1" value="MQTT&lt;div&gt;SSL/TLS&lt;/div&gt;&lt;div&gt;SMTP&lt;/div&gt;&lt;div&gt;serveur WEB&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="510" y="260" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V2J-SGUirkFo1w58Hbav-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="630" y="280" as="sourcePoint" />
+            <mxPoint x="630" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="0kDpFokZi4Miojhcq2RK-9" value="Interface libres : g1/0/21 et g1/0/22&lt;div&gt;VLAN 1 (default)&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="120" y="245" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-3" value="" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=0;exitDx=75;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="V2J-SGUirkFo1w58Hbav-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="310" as="sourcePoint" />
+            <mxPoint x="110" y="255" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-4" value="" style="endArrow=none;html=1;rounded=0;exitX=0.388;exitY=0.004;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=90;entryDy=250;entryPerimeter=0;" edge="1" parent="1" source="0kDpFokZi4Miojhcq2RK-7" target="0kDpFokZi4Miojhcq2RK-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="264.5" as="sourcePoint" />
+            <mxPoint x="480" y="264.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-5" value="Arduino Uno (&lt;span style=&quot;font-size:10.0pt;font-family:&amp;quot;Arial&amp;quot;,sans-serif;&lt;br/&gt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&lt;br/&gt;mso-ansi-language:FR;mso-fareast-language:FR;mso-bidi-language:AR-SA&quot;&gt;Atmega328P)&lt;/span&gt;&amp;nbsp;+ Shield Ethernet (&lt;span style=&quot;font-size:10.0pt;font-family:&amp;quot;Arial&amp;quot;,sans-serif;&lt;br/&gt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&lt;br/&gt;mso-ansi-language:FR;mso-fareast-language:FR;mso-bidi-language:AR-SA&quot;&gt;Microchip&lt;br&gt;ENC28J60 )&lt;/span&gt;&amp;nbsp;+ capteur de température (DHT11)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="270" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-7" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.internet_3;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="180.5" y="-70" width="79.5" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-8" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=105.5;entryPerimeter=0;" edge="1" parent="1" source="rPk8PY3GtbA8d-U7c-WJ-11" target="0kDpFokZi4Miojhcq2RK-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="220.5" y="60" as="sourcePoint" />
+            <mxPoint x="120" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-9" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="rPk8PY3GtbA8d-U7c-WJ-7" target="rPk8PY3GtbA8d-U7c-WJ-11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="275" as="sourcePoint" />
+            <mxPoint x="219.73493975903602" y="-20" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rPk8PY3GtbA8d-U7c-WJ-11" value="" style="image;html=1;image=img/lib/clip_art/networking/Router_Icon_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="180.5" y="50" width="80" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
