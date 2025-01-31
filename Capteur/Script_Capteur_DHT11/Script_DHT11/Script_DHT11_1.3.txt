@@ -1,0 +1,126 @@
+#include <DHT.h>
+#include <SPI.h>
+#include <Ethernet.h>
+#include <PubSubClient.h>
+
+// Configuration du DHT11
+#define DHTPIN 3
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// Configuration réseau Ethernet
+byte mac[] = { 0xA8, 0x61, 0x0A, 0xAE, 0x6F, 0x4D };
+IPAddress ip(10, 129, 251, 1);
+IPAddress mqttServer(10, 129, 251, 253);
+const int mqttPort = 1883;
+
+// Clients Ethernet et MQTT
+EthernetClient ethernetClient;
+PubSubClient clientMQTT(ethernetClient);
+EthernetServer server(80);
+
+// Dernière température mesurée
+float lastTemperature = 0.0;
+
+void setup() {
+  Serial.begin(9600);
+  Ethernet.begin(mac, ip);
+  dht.begin();                   // Initialisation du capteur DHT11
+  Serial.println("Capteur DHT initialisé.");
+
+  // Initialisation Ethernet
+  Ethernet.begin(mac, ip);
+  delay(1000);
+
+  // Configurer MQTT
+  clientMQTT.setServer(mqttServer, mqttPort);
+
+  // Démarrer le serveur web
+  server.begin();
+  Serial.println("Serveur web démarré à l'adresse IP : 10.129.251.1:80");
+}
+
+void loop() {
+  if (!clientMQTT.connected()) {
+    reconnectMQTT();
+  }
+  clientMQTT.loop();
+
+  // Lecture de la température
+  float temp = dht.readTemperature();
+  if (!isnan(temp)) {
+    lastTemperature = temp;
+
+    // Publier la température sur MQTT
+    char tempStr[8];
+    dtostrf(temp, 1, 2, tempStr);
+    if (clientMQTT.publish("temp", tempStr)) {
+      Serial.println("Température envoyée à MQTT.");
+    } else {
+      Serial.println("Erreur lors de l'envoi de la température.");
+    }
+  } else {
+    Serial.println("Échec de la lecture du capteur DHT11 !");
+  }
+
+  // Gérer les requêtes HTTP
+  handleWebServer();
+
+  delay(5000); // Attendre 5 secondes avant la prochaine lecture
+}
+
+void handleWebServer() {
+  EthernetClient client = server.available();
+  if (client) {
+    Serial.println("Nouvelle connexion HTTP.");
+    String request = "";
+    while (client.connected()) {
+      if (client.available()) {
+        char c = client.read();
+        request += c;
+
+        // Si la requête est terminée
+        if (c == '\n' && request.length() == 1) {
+          // Réponse HTTP avec HTML
+          client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/html");
+          client.println("Connection: close");
+          client.println();
+
+          client.println("<!DOCTYPE HTML>");
+          client.println("<html>");
+          client.println("<head>");
+          client.println("<title>Serveur Web DHT11</title>");
+          client.println("<meta http-equiv='refresh' content='5'>"); // Rafraîchit la page toutes les 5 secondes
+          client.println("<style>body { font-family: Arial; text-align: center; }</style>");
+          client.println("</head>");
+          client.println("<body>");
+          client.println("<h1>Serveur Web - Capteur DHT11</h1>");
+          client.println("<p>Température actuelle : <b>" + String(lastTemperature) + " °C</b></p>");
+          client.println("<p>Rafraîchissement automatique dans 5 secondes...</p>");
+          client.println("</body>");
+          client.println("</html>");
+          break;
+        }
+      }
+    }
+    delay(1);
+    client.stop();
+    Serial.println("Client déconnecté.");
+  }
+}
+
+void reconnectMQTT() {
+  while (!clientMQTT.connected()) {
+    Serial.print("Tentative de connexion MQTT...");
+    String clientId = "arduinoClient-";
+    clientId += String(random(0xffff), HEX);
+    if (clientMQTT.connect(clientId.c_str())) {
+      Serial.println("Connecté au serveur MQTT.");
+    } else {
+      Serial.print("Échec, état : ");
+      Serial.println(clientMQTT.state());
+      delay(5000);
+    }
+  }
+}
